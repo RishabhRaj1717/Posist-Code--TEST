@@ -1,0 +1,193 @@
+/*
+POSOIST TEST - CODE - DTU
+Name- Rishabh    Roll no. - 2k15/SE/57
+
+NOTE: - I have made the structure of the program and there are just simple functions remaining to be defined
+As program is incomplete it can not run, but anyone can understand how program will work. It requires
+more time to be completed. Thank you!
+*/
+
+#include<iostream>
+#include<string>
+#include<time.h>
+using namespace std;
+
+
+class Node{
+string timestamp;
+string data;
+int nodeNumber;
+string nodeId;
+string referenceNodeId;
+vector<string> childReferenceNodeId;
+string genesisReferenceNodeId;
+string HashValue;
+
+Node* parent;
+vector<Node*> child;
+
+public:
+ int CreateNode(string ownerid,float value,string name,int nodenum,string refnodeid,string genid)
+ {  //assign parent;
+    Node* parent= searchp(refnodeid); //searchp is the member of Graph class below
+    refnodeid = parent.getId();
+
+     //checking value
+    if(nodenum!=1){
+    int sumofChilds= getsum(parent);
+    if(value>genvalue-sumofChilds)
+        return 1;
+    }
+    else
+      genid=ownerid;
+
+    time_t t=time(NULL);
+    timestamp = ctime(&t);
+
+    nodeNumber= nodenum;
+    nodeId=ownerid;
+    data = encrypt(ownerid,value,name);
+
+    assignchildrenrefid(); //this function will use a for loop and assign all children ids in this vector
+
+    genesisReferenceNodeId = genid;
+    assignHashValue(); //this function assign Hash value to hash value attribute.
+
+   return 0;
+ }
+
+int getsum(){
+//gives the sum of all the childs of the node
+
+}
+
+string encrypt(int id,float val,string name){
+//encrypts the 3 values to give data of node
+}
+
+int getdecryptvalue(){ //decrypts the data and return value of node
+
+}
+
+string getID(){ return nodeId; }
+
+string getvalue(){ //returns value of node
+return getdecryptvalue();
+}
+
+
+};
+
+
+  /////=-----------------Node Class ends
+
+
+class Graph{
+Node *gennode;
+public:
+
+void CreateGen(int n){
+    int ownid;
+    float genval;
+    string genown;
+    cout<<"Enter the name of owner of Genesis node:"<<endl;
+    cin>> genown;
+    cout<<"Enter the owner id of Genesis node:"<<endl;
+    cin>> ownid;
+    cout<<"Enter the value of Genesis node:"<<endl;
+    cin>> genval;
+    gennode= new Node;
+    if(!gennode.CreateNode(ownid,genval,genown,n,NULL))
+        cout<<"Genesis node created successfully\n\n";
+    return ownid;
+     }
+
+CreateChild(int n,string genid,string pid=NULL){
+    int ownid;
+    float val;
+    string own;
+    cout<<"Enter the name of owner of the node:"<<endl;
+    cin>> own;
+    cout<<"Enter the owner id of the node:"<<endl;
+    cin>> ownid;
+    cout<<"Enter the value of the node:"<<endl;
+    cin>> val;
+    cout<<"Enter the value of the node:"<<endl;
+    cin>> val;
+    cout<<"Enter the ID of parent of the node:"<<endl;
+    cin>>pid;
+
+    Node node= new Node;
+    if(!node.CreateNode(ownid,val,own,n,pid,genid))
+        cout<<"Node created successfully\n\n";
+    else
+        cout<<"value does not satisfy condition, choose different value\n\n";
+ }
+
+CreateSetChilds(int n,string genid){
+    int ownid,m;
+    float val;
+    string own;
+    string pid;
+    cout<<"Enter the ID of parent of the node:"<<endl;
+    cin>>pid;
+    cout<<"Enter the number of childs you want to create:\n";
+    cin>>m;
+    for(int j=0;j<m;j++){
+    cout<<"Enter the details of first child:\n";
+    CreateChild(n,genid,pid);
+    cout<<endl;
+    }
+    cout<<"All childs created Successfully\n\n";
+ }
+
+Node* searchp(string refnodeid){
+Node *start=gennode;
+if(start.getid==refnodeidnode)
+    return start;
+else
+{ //continue search using DFS or BFS
+
+}
+
+}
+
+};
+
+
+//----------Graph class ends
+
+
+int main(){
+    Graph g;
+    int n;
+    string geneid;
+    int numofnodes=0;
+    cout<<"Select options:"<<endl;
+    cout<<"1.Create Genesis \n2.Create set of child"
+    <<"\n3.Create one Child. \n4.Verify Owner \n5. Edit value of a node.\n";
+    cin>>n;
+
+    switch(n){
+case 1:
+    numofnodes++;
+    geneid= g.CreateGen(numofnodes);
+    break;
+case 2:
+    numofnodes++;
+    g.CreateSetChilds(numofnodes,geneid);
+    break;
+case 3:
+    numofnodes++;
+    g.CreateChild(numofnodes,geneid);
+    break;
+case 4:
+    g.VerifyOwn();
+    break;
+case 5:
+    g.editvalue();
+    break;
+}
+
+return 0;
+}
